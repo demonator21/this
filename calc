@@ -1,0 +1,104 @@
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+
+public class Calculator implements ActionListener
+{
+  JFrame window = new JFrame("Calculator");
+	JPanel buttonsPanel = new JPanel(new FlowLayout());
+	JTextArea text = new JTextArea(1,20);
+	
+	JButton num0 = new JButton("0");
+	JButton num1 = new JButton("1");
+	JButton num2 = new JButton("2");
+	JButton num3 = new JButton("3");
+	JButton num4 = new JButton("4");
+	JButton num5 = new JButton("5");
+	JButton num6 = new JButton("6");
+	JButton num7 = new JButton("7");
+	JButton num8 = new JButton("8");
+	JButton num9 = new JButton("9");
+	
+	JButton butadd = new JButton("add");
+	JButton butsubt = new JButton("subt");
+	JButton butmult = new JButton("mult");
+	JButton butdiv = new JButton("div");
+	JButton buteq = new JButton("eq");
+	JButton butclear = new JButton("clear");
+	
+	
+	public Calculator()
+	{
+		
+		window.setVisible(true);
+		window.setSize(200,250);
+		window.setTitle("Calculator");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
+              
+        num0.addActionListener(this);
+        buttonsPanel.add(num0);
+        
+        num1.addActionListener(this);
+        buttonsPanel.add(num1);
+        
+        num2.addActionListener(this);
+        buttonsPanel.add(num2);
+        
+        num3.addActionListener(this);
+        buttonsPanel.add(num3);
+        
+        num4.addActionListener(this);
+        buttonsPanel.add(num4);
+        
+        num5.addActionListener(this);
+        buttonsPanel.add(num5);
+        
+        num6.addActionListener(this);
+        buttonsPanel.add(num6);
+        
+        num7.addActionListener(this);
+        buttonsPanel.add(num7);
+        
+        num8.addActionListener(this);
+        buttonsPanel.add(num8);
+        
+        num9.addActionListener(this);
+        buttonsPanel.add(num9);
+        
+        butadd.addActionListener(this);
+        buttonsPanel.add(butadd);
+        
+        butsubt.addActionListener(this);
+        buttonsPanel.add(butsubt);
+          
+        butmult.addActionListener(this);
+        buttonsPanel.add(butmult);
+          
+        butdiv.addActionListener(this);
+        buttonsPanel.add(butdiv);
+        
+        buteq.addActionListener(this);
+        buttonsPanel.add(buteq);
+          
+        butclear.addActionListener(this);
+        buttonsPanel.add(butclear);
+        
+	}
+	
+	public static void main(String[] args)
+	{
+		new Calculator();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+}

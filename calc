@@ -1,104 +1,212 @@
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
+public class Roulette extends JFrame implements ActionListener {
 
-public class Calculator implements ActionListener
-{
-  JFrame window = new JFrame("Calculator");
-	JPanel buttonsPanel = new JPanel(new FlowLayout());
-	JTextArea text = new JTextArea(1,20);
 	
-	JButton num0 = new JButton("0");
-	JButton num1 = new JButton("1");
-	JButton num2 = new JButton("2");
-	JButton num3 = new JButton("3");
-	JButton num4 = new JButton("4");
-	JButton num5 = new JButton("5");
-	JButton num6 = new JButton("6");
-	JButton num7 = new JButton("7");
-	JButton num8 = new JButton("8");
-	JButton num9 = new JButton("9");
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField P1Number;
+	private JTextField P2Number;
+	private JButton butNewBets, butSpin;
+	private JLabel P1Score, P2Score, mainLabel;
+	private JMenuItem menuItem1, menuItem2;
+
+	int p1Score = 5, p2Score = 5;
+	int rouletteNumber, p1BetNumber, p2BetNumber;
+
 	
-	JButton butadd = new JButton("add");
-	JButton butsubt = new JButton("subt");
-	JButton butmult = new JButton("mult");
-	JButton butdiv = new JButton("div");
-	JButton buteq = new JButton("eq");
-	JButton butclear = new JButton("clear");
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Roulette n = new Roulette();
+					n.setVisible(true);
+					n.newGame();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public Roulette() {
+		setTitle("Roulette Game");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 551, 372);
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu menu = new JMenu("File");
+		menuBar.add(menu);
+
+		JMenuItem menuItem1 = new JMenuItem("New Game");
+		menu.add(menuItem1);
+		menuItem1.addActionListener(this);
+
+		JMenuItem menuItem2 = new JMenuItem("Exit");
+		menu.add(menuItem2);
+		menuItem2.addActionListener(this);
+
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel1 = new JPanel();
+		contentPane.add(panel1, BorderLayout.SOUTH);
+
+		JLabel label1 = new JLabel("Player 1\r\n");
+		label1.setHorizontalAlignment(SwingConstants.LEFT);
+		panel1.add(label1);
+
+		P1Number = new JTextField();
+		P1Number.setHorizontalAlignment(SwingConstants.LEFT);
+		P1Number.setText("A Number");
+		panel1.add(P1Number);
+		P1Number.setColumns(10);
+
+		JButton butNewBets = new JButton("New Bets");
+		panel1.add(butNewBets);
+		butNewBets.addActionListener(this);
+
+		JButton butSpin = new JButton("Spin\r\n");
+		panel1.add(butSpin);
+		butSpin.addActionListener(this);
+
+		JLabel label2 = new JLabel("Player 2");
+		panel1.add(label2);
+
+		P2Number = new JTextField();
+		P2Number.setText("A Number");
+		panel1.add(P2Number);
+		P2Number.setColumns(10);
+
+		JPanel panel2 = new JPanel();
+		contentPane.add(panel2, BorderLayout.NORTH);
+
+		JLabel label3 = new JLabel("Player 1 Score: ");
+		label3.setHorizontalAlignment(SwingConstants.LEFT);
+		panel2.add(label3);
+
+		JLabel P1Score = new JLabel();
+		panel2.add(P1Score);
+
+		JLabel mainLabel = new JLabel(
+				":LKJSF:LKJSD:FLKJSDF:LKJSDF:LKJS:FDLKJSDF");
+		panel2.add(mainLabel);
+
+		JLabel label4 = new JLabel("Player 2 Score: ");
+		panel2.add(label4);
+
+		JLabel P2Score = new JLabel();
+		panel2.add(P2Score);
+
+		JLabel RouletteTable = new JLabel("");
+		RouletteTable.setHorizontalAlignment(SwingConstants.CENTER);
+		RouletteTable.setIcon(new ImageIcon(Roulette.class
+				.getResource("/resources/european_roulette_table_layout.png")));
+		contentPane.add(RouletteTable, BorderLayout.CENTER);
+	}
 	
+	//Number Reader #1
+	public int numberReader1() {
+		Integer num1;
+		String s;
+		s = P1Number.getText();
+		num1 = Integer.valueOf(s);
+
+		return num1;
+	}
+
+	//Number Reader #2
+	public int numberReader2() {
+		Integer num2;
+		String s;
+		s = P2Number.getText();
+		num2 = Integer.valueOf(s);
+
+		return num2;
+	}
+
+	//Clear Function(setting bets to 0)
+	public void clear() {
+		P1Number.setText("");
+		P2Number.setText("");
+	}
 	
-	public Calculator()
-	{
+	//New Game Function (set scores back to 5)
+	public void newGame() {
+		P1Score.setText(Integer.toString(p1Score));
+		P2Score.setText(Integer.toString(p2Score));
+		P1Number.setText("");
+		P2Number.setText("");
+		p1Score = 5;
+		p2Score = 5;
+	}
+
+	public void update() {
+
+		p1BetNumber = numberReader1();
+		p2BetNumber = numberReader2();
 		
-		window.setVisible(true);
-		window.setSize(200,250);
-		window.setTitle("Calculator");
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
-              
-        num0.addActionListener(this);
-        buttonsPanel.add(num0);
-        
-        num1.addActionListener(this);
-        buttonsPanel.add(num1);
-        
-        num2.addActionListener(this);
-        buttonsPanel.add(num2);
-        
-        num3.addActionListener(this);
-        buttonsPanel.add(num3);
-        
-        num4.addActionListener(this);
-        buttonsPanel.add(num4);
-        
-        num5.addActionListener(this);
-        buttonsPanel.add(num5);
-        
-        num6.addActionListener(this);
-        buttonsPanel.add(num6);
-        
-        num7.addActionListener(this);
-        buttonsPanel.add(num7);
-        
-        num8.addActionListener(this);
-        buttonsPanel.add(num8);
-        
-        num9.addActionListener(this);
-        buttonsPanel.add(num9);
-        
-        butadd.addActionListener(this);
-        buttonsPanel.add(butadd);
-        
-        butsubt.addActionListener(this);
-        buttonsPanel.add(butsubt);
-          
-        butmult.addActionListener(this);
-        buttonsPanel.add(butmult);
-          
-        butdiv.addActionListener(this);
-        buttonsPanel.add(butdiv);
-        
-        buteq.addActionListener(this);
-        buttonsPanel.add(buteq);
-          
-        butclear.addActionListener(this);
-        buttonsPanel.add(butclear);
-        
-	}
-	
-	public static void main(String[] args)
-	{
-		new Calculator();
+		rouletteNumber = (int) (Math.random() * 37);
+
+		if (p1BetNumber == rouletteNumber) {
+			p1Score = p1Score++;
+			P1Score.setText(Integer.toString(p1Score++));
+		}
+
+		else if (p1BetNumber != rouletteNumber) {
+			p1Score = p1Score--;
+			P1Score.setText(Integer.toString(p1Score--));
+		}
+
+		if (p2BetNumber == rouletteNumber) {
+			p2Score = p2Score++;
+			P2Score.setText(Integer.toString(p2Score++));
+		}
+
+		else if (p2BetNumber != rouletteNumber) {
+			p2Score = p2Score--;
+			P2Score.setText(Integer.toString(p2Score--));
+		}
+
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
+
+		if(e.getSource() == butSpin) {
+			update();
+		}
 		
+		if(e.getSource() == butNewBets){
+			clear();
+		}
+		
+		if(e.getSource() == menuItem1) {
+			newGame();
+		}
+		
+		if(e.getSource() == menuItem2) {
+			System.exit(0);
+		}
+
 	}
+
 }
